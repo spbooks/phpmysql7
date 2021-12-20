@@ -1,8 +1,10 @@
 <?php 
 $roll = rand(1, 6);
 
-echo 'You rolled a ' . $roll;
+echo '<p>You rolled a ' . $roll . '</p>';
 
 if ($roll == 6) {
-  echo 'You win!';
+  echo '<p>You win!</p>';
 }
+
+echo '<p>Thanks for playing</p>';
