@@ -5,4 +5,4 @@ echo 'You rolled a ' . $roll;
 
 if ($roll == 6) {
   echo 'You win!';
-}#
+}
