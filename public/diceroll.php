@@ -1,6 +1,5 @@
 <?php 
-$roll = 0;
-while ($roll != 6) {
+do {
   $roll = rand(1, 6);
   echo '<p>You rolled a ' . $roll . '</p>';
 
@@ -11,3 +10,4 @@ while ($roll != 6) {
     echo '<p>Sorry, you didn\'t win, better luck next time!</p>';
   }
 }
+while ($roll != 6);
