@@ -1,23 +1,24 @@
 <?php
 try {
-  $pdo = new PDO('mysql:host=mysql;dbname=ijdb;charset=utf8mb4', 'ijdbuser', 'mypassword');
+    include __DIR__ . '/../includes/DatabaseConnection.php';
 
-  $sql = 'SELECT `joketext`, `id` FROM joke';
+    $sql = 'SELECT `joke`.`id`, `joketext`, `name`, `email`
+    FROM `joke` INNER JOIN `author`
+      ON `authorid` = `author`.`id`';
 
-  $jokes = $pdo->query($sql);
+    $jokes = $pdo->query($sql);
 
-  $title = 'Joke list';
+    $title = 'Joke list';
 
-  ob_start();
+    ob_start();
 
-  include  __DIR__ . '/../templates/jokes.html.php';
+    include  __DIR__ . '/../templates/jokes.html.php';
 
-  $output = ob_get_clean();
-}
-catch (PDOException $e) {
-  $title = 'An error has occurred';
+    $output = ob_get_clean();
+} catch (PDOException $e) {
+    $title = 'An error has occurred';
 
-  $output = 'Database error: ' . $e->getMessage() . ' in ' .
+    $output = 'Database error: ' . $e->getMessage() . ' in ' .
   $e->getFile() . ':' . $e->getLine();
 }
 
