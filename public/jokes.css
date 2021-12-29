@@ -21,3 +21,7 @@ input, label, select, textarea {float: left; width: 15em; margin-bottom: 1em;  p
 label {clear: left; padding: 0; margin: 0;}
 input[type="submit"] {margin-left: 15em; width: auto; padding: 0.5em 1em; clear: both; font-size: 1em;}
 form {overflow: auto; clear: both; display: block;}
+
+blockquote {display: table; margin-bottom: 1em; border-bottom: 1px solid #ccc; padding: 0.5em;}
+blockquote p {display: table-cell; width: 90%; vertical-align: top;}
+blockquote form {display: table-cell; width: 10%;}

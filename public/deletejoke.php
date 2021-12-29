@@ -2,22 +2,19 @@
 try {
   $pdo = new PDO('mysql:host=mysql;dbname=ijdb;charset=utf8mb4', 'ijdbuser', 'mypassword');
 
-  $sql = 'SELECT `joketext`, `id` FROM joke';
+  $sql = 'DELETE FROM `joke` WHERE `id` = :id';
 
-  $jokes = $pdo->query($sql);
+  $stmt = $pdo->prepare($sql);
 
-  $title = 'Joke list';
+  $stmt->bindValue(':id', $_POST['id']);
+  $stmt->execute();
 
-  ob_start();
-
-  include  __DIR__ . '/../templates/jokes.html.php';
-
-  $output = ob_get_clean();
+  header('location: jokes.php');
 }
 catch (PDOException $e) {
   $title = 'An error has occurred';
 
-  $output = 'Database error: ' . $e->getMessage() . ' in ' .
+  $output = 'Unable to connect to the database server: ' . $e->getMessage() . ' in ' .
   $e->getFile() . ':' . $e->getLine();
 }
 
