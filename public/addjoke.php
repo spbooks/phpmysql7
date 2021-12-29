@@ -4,12 +4,12 @@ if (isset($_POST['joketext'])) {
     include __DIR__ . '/../includes/DatabaseConnection.php';
     include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-    insertJoke($pdo, [
-                    'authorId' => 1, 
-                    'joketext' => $_POST['joketext'],
-                    'jokedate' => new DateTime()
-            ]
-    );
+        insert($pdo, 'joke', [
+                     'authorId' => 1, 
+                     'jokeText' => $_POST['joketext'], 
+                     'jokedate' => new DateTime()
+                ]
+        );
 
     header('location: jokes.php');
   }
