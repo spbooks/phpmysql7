@@ -9,7 +9,7 @@ function totalJokes($pdo) {
 }
 
 function getJoke($pdo, $id) {
-  $stmt = $pdo->prepare('SELECT FROM `joke` WHERE `id` = :id');
+  $stmt = $pdo->prepare('SELECT * FROM `joke` WHERE `id` = :id');
 
   $values = [
       'id' => $id
@@ -30,4 +30,20 @@ function insertJoke($pdo, $joketext, $authorId) {
   ];
 
   $stmt->execute($values);
+}
+
+function updateJoke($pdo, $jokeId, $joketext, $authorId) {
+  $stmt = $pdo->prepare('UPDATE `joke` SET 
+                           `authorId` = :authorId, 
+                           `joketext` = :joketext 
+                         WHERE `id` = :id');
+
+  $values = [
+    ':joketext' => $joketext,
+    ':authorId' => $authorId,
+    ':id' => $jokeId
+  ];
+
+  $stmt->execute($values);
+
 }
