@@ -38,27 +38,28 @@ function insertJoke($pdo, $values) {
 
 	$query .= ')';
 
+	$values = processDates($values);
+
 	$stmt = $pdo->prepare($query);
-
 	$stmt->execute($values);
-
 }
 
 function updateJoke($pdo, $values) {
 
 	$query = ' UPDATE `joke` SET ';
 
-	$updateFields = [];
 	foreach ($values as $key => $value) {
-		$updateFields[] = '`' . $key . '` = :' . $key;
+		$query .= '`' . $key . '` = :' . $key . ',';
 	}
 
-	$query .= implode(', ', $updateFields);
+	$query = rtrim($query, ',');
 
 	$query .= ' WHERE `id` = :primaryKey';
 
 	// Set the :primaryKey variable
 	$values['primaryKey'] = $values['id'];
+
+	$values = processDates($values);
 
 	$stmt = $pdo->prepare($query);
 	$stmt->execute($values);
@@ -83,4 +84,14 @@ function allJokes($pdo) {
   $stmt->execute();
 
   return $stmt->fetchAll();
+}
+
+function processDates($values) {
+	foreach ($values as $key => $value) {
+		if ($value instanceof DateTime) {
+			$values[$key] = $value->format('Y-m-d H:i:s');
+		}
+	}
+
+	return $values;
 }

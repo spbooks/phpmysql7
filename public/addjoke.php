@@ -7,9 +7,9 @@ if (isset($_POST['joketext'])) {
     insertJoke($pdo, [
                     'authorId' => 1, 
                     'joketext' => $_POST['joketext'],
-                    'jokedate' => date('Y-m-d')
+                    'jokedate' => new DateTime()
             ]
- );
+    );
 
     header('location: jokes.php');
   }
