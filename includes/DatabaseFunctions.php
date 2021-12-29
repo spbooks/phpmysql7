@@ -20,7 +20,7 @@ function getJoke($pdo, $id) {
 }
 
 function insertJoke($pdo, $values) {
-	$query = 'INSERT INTO `joke` ('
+	$query = 'INSERT INTO `joke` (';
 
 	foreach ($values as $key => $value) {
 		$query .= '`' . $key . '`,';
@@ -49,7 +49,7 @@ function updateJoke($pdo, $values) {
 	$query = ' UPDATE `joke` SET ';
 
 	$updateFields = [];
-	foreach ($array as $key => $value) {
+	foreach ($values as $key => $value) {
 		$updateFields[] = '`' . $key . '` = :' . $key;
 	}
 
