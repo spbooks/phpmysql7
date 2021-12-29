@@ -113,3 +113,15 @@ function total($pdo, $table) {
 	$row = $stmt->fetch();
 	return $row[0];
 }
+
+function save($pdo, $table, $primaryKey, $record) {
+	try {
+        if (empty($record[$primaryKey])) {
+          unset($record[$primaryKey]);
+        }
+        insert($pdo, $table, $record);
+	}
+	catch (PDOException $e) {
+		update($pdo, $table, $primaryKey, $record);
+	}
+}
