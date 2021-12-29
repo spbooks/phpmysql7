@@ -1,27 +1,24 @@
 <?php
 try {
-    include __DIR__ . '/../includes/DatabaseConnection.php';
-    include __DIR__ . '/../includes/DatabaseFunctions.php';
+  include __DIR__ . '/../includes/DatabaseConnection.php';
+  include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-    $sql = 'SELECT `joke`.`id`, `joketext`, `name`, `email`
-    FROM `joke` INNER JOIN `author`
-      ON `authorid` = `author`.`id`';
+  $jokes = allJokes($pdo);
 
-    $jokes = $pdo->query($sql);
+  $title = 'Joke list';
 
-    $title = 'Joke list';
+  $totalJokes = totalJokes($pdo);
 
-    $totalJokes = totalJokes($pdo);
+  ob_start();
 
-    ob_start();
+  include  __DIR__ . '/../templates/jokes.html.php';
 
-    include  __DIR__ . '/../templates/jokes.html.php';
+  $output = ob_get_clean();
+}
+catch (PDOException $e) {
+  $title = 'An error has occurred';
 
-    $output = ob_get_clean();
-} catch (PDOException $e) {
-    $title = 'An error has occurred';
-
-    $output = 'Database error: ' . $e->getMessage() . ' in ' .
+  $output = 'Database error: ' . $e->getMessage() . ' in ' .
   $e->getFile() . ':' . $e->getLine();
 }
 
