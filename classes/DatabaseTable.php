@@ -32,6 +32,9 @@ class DatabaseTable {
 
     public function save($record) {
         try {
+           if (empty($record[$this->primaryKey])) {
+               unset($record[$this->primaryKey]);
+           }
            $this->insert($record);
         } catch (PDOException $e) {
            $this->update($record);
