@@ -1,4 +1,13 @@
 <?php
+function loadTemplate($templateFileName, $variables) {
+    extract($variables);
+
+    ob_start();
+    include  __DIR__ . '/../templates/' . $templateFileName;
+
+    return ob_get_clean();
+}
+
 try {
     include __DIR__ . '/../includes/DatabaseConnection.php';
     include __DIR__ . '/../classes/DatabaseTable.php';
@@ -10,19 +19,14 @@ try {
     $jokeController = new JokeController($jokesTable, $authorsTable);
 
     $action = $_GET['action'] ?? 'home';
-	$page = $jokeController->$action();
 
-	$title = $page['title'];
+    $page = $jokeController->$action();
 
-	if (isset($page['variables'])) {
-	    extract($page['variables']);
-	}
+    $title = $page['title'];
 
-	ob_start();
+    $variables = $page['variables'] ?? [];
+    $output = loadTemplate($page['template'], $variables);
 
-	include  __DIR__ . '/../templates/' . $page['template'];
-
-$output = ob_get_clean();
 } catch (PDOException $e) {
     $title = 'An error has occurred';
 
