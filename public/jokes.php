@@ -1,37 +1,40 @@
 <?php
 try {
-        include __DIR__ . '/../includes/DatabaseConnection.php';
-        include __DIR__ . '/../includes/DatabaseFunctions.php';
+    include __DIR__ . '/../includes/DatabaseConnection.php';
+    include __DIR__ . '/../classes/DatabaseTable.php';
 
-        $result = findAll($pdo, 'joke');
+    $jokesTable = new DatabaseTable($pdo, 'joke', 'id');
+    $authorsTable = new DatabaseTable($pdo, 'author', 'id');
 
-        $jokes = [];
-        foreach ($result as $joke) {
-                $author = find($pdo, 'author', 'id', $joke['authorId'])[0];
+    $result = $jokesTable->findAll();
 
-                $jokes[] = [
-                        'id' => $joke['id'],
-                        'joketext' => $joke['joketext'],
-                        'jokedate' => $joke['jokedate'],
-                        'name' => $author['name'],
-                        'email' => $author['email']
-                ];
-        }
+    $jokes = [];
+    foreach ($result as $joke) {
+        $author = $authorsTable->find('id', $joke['authorId'])[0];
 
-        $title = 'Joke list';
+        $jokes[] = [
+            'id' => $joke['id'],
+            'joketext' => $joke['joketext'],
+            'jokedate' => $joke['jokedate'],
+            'name' => $author['name'],
+            'email' => $author['email']
+        ];
+    }
 
-        $totalJokes = total($pdo, 'joke');
+    $title = 'Joke list';
 
-        ob_start();
+    $totalJokes = $jokesTable->total();
 
-        include  __DIR__ . '/../templates/jokes.html.php';
+    ob_start();
 
-        $output = ob_get_clean();
+    include  __DIR__ . '/../templates/jokes.html.php';
+
+    $output = ob_get_clean();
 } catch (PDOException $e) {
-        $title = 'An error has occurred';
+    $title = 'An error has occurred';
 
-        $output = 'Database error: ' . $e->getMessage() . ' in ' .
-        $e->getFile() . ':' . $e->getLine();
+    $output = 'Database error: ' . $e->getMessage() . ' in ' .
+    $e->getFile() . ':' . $e->getLine();
 }
 
 include  __DIR__ . '/../templates/layout.html.php';
