@@ -10,11 +10,19 @@ try {
     $jokeController = new JokeController($jokesTable, $authorsTable);
 
     $action = $_GET['action'] ?? 'home';
+	$page = $jokeController->$action();
 
-    $page = $jokeController->$action();
+	$title = $page['title'];
 
-    $title = $page['title'];
-    $output = $page['output'];
+	if (isset($page['variables'])) {
+	    extract($page['variables']);
+	}
+
+	ob_start();
+
+	include  __DIR__ . '/../templates/' . $page['template'];
+
+$output = ob_get_clean();
 } catch (PDOException $e) {
     $title = 'An error has occurred';
 
