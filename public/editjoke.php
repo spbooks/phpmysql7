@@ -15,6 +15,9 @@ try {
                 if (isset($_GET['id'])) {
                         $joke = find($pdo, 'joke', 'id', $_GET['id'])[0] ?? null;
                 }
+                else {
+                    $joke = null;
+                }
 
                 $title = 'Edit joke';
 
