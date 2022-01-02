@@ -17,6 +17,9 @@ try {
         if (isset($_GET['id'])) {
             $joke = $jokesTable->find('id', $_GET['id'])[0] ?? null;
         }
+        else {
+            $joke = null;
+        }
 
         $title = 'Edit joke';
 
