@@ -98,7 +98,7 @@ class DatabaseTable {
 
     private function processDates($values) {
         foreach ($values as $key => $value) {
-            if ($value instanceof DateTime) {
+            if ($value instanceof \DateTime) {
                 $values[$key] = $value->format('Y-m-d');
             }
         }
