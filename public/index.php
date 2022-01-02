@@ -12,7 +12,7 @@ try {
     include __DIR__ . '/../includes/DatabaseConnection.php';
     include __DIR__ . '/../classes/DatabaseTable.php';
     include __DIR__ . '/../controllers/JokeController.php';
-    include __DIR__ . '/../controllers/RegisterController.php';
+    include __DIR__ . '/../controllers/AuthorController.php';
 
     $jokesTable = new DatabaseTable($pdo, 'joke', 'id');
     $authorsTable = new DatabaseTable($pdo, 'author', 'id');
@@ -23,8 +23,8 @@ try {
     if ($controllerName === 'joke') {
         $controller = new JokeController($jokesTable, $authorsTable);
     }
-    else if ($controllerName === 'register') {
-        $controller = new RegisterController($authorsTable);
+    else if ($controllerName === 'author') {
+        $controller = new AuthorController($authorsTable);
     }
 
     if ($action == strtolower($action) && $controllerName == strtolower($controllerName)) {
