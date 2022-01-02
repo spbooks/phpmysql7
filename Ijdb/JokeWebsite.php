@@ -17,6 +17,9 @@ class JokeWebsite implements \Ninja\Website {
         else if ($controllerName === 'register') {
             $controller = new \Ijdb\Controllers\Register($authorsTable);
         }
+        else {
+            $controller = null;
+        }
 
         return $controller;
     }
