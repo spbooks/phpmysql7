@@ -16,9 +16,18 @@ class Joke {
 	}
 
 	public function delete() {
-	    $this->jokesTable->delete('id', $_POST['id']);
 
-	    header('location: /joke/list');
+	  $author = $this->authentication->getUser();
+
+	  $joke = $this->jokesTable->find('id', $_POST['id'])[0];
+
+	  if ($joke['authorId'] != $author['id']) {
+	    return;
+	  }
+
+	  $this->jokesTable->delete('id', $_POST['id']);
+
+	  header('location: /joke/list');
 	}
 
 	public function list() {
@@ -56,7 +65,7 @@ class Joke {
 
 	}
 
-	public function editSubmit() {
+	public function editSubmit($id = null) {
 		$author = $this->authentication->getUser();
 
 	    $joke = $_POST['joke'];
@@ -78,10 +87,13 @@ class Joke {
 
 	    $title = 'Edit joke';
 
+	    $author = $this->authentication->getUser();
+
 	    return ['template' => 'editjoke.html.php',
 	        'title' => $title,
 	        'variables' => [
-	            'joke' => $joke ?? null
+	            'joke' => $joke,
+	            'userId' => $author['id'] ?? null
 	        ]
 	    ];
 	}
