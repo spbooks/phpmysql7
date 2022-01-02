@@ -55,7 +55,7 @@ class JokeController {
 
 	}
 
-	public function edit() {
+	public function edit($id = null) {
 	    if (isset($_POST['joke'])) {
 
 	        $joke = $_POST['joke'];
@@ -69,7 +69,7 @@ class JokeController {
 	    }
 	    else {
 
-	        if (isset($_GET['id'])) {
+	        if (isset($id)) {
 	            $joke = $this->jokesTable->find('id', $_GET['id'])[0];
 	        }
 	        else {
