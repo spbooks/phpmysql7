@@ -5,7 +5,7 @@ class EntryPoint {
     public function __construct(private $website) {
     }
 
-    public function run($uri) {
+    public function run($uri, $method) {
         try {
             $this->checkUri($uri);
 
@@ -18,8 +18,12 @@ class EntryPoint {
             $controllerName = array_shift($route);
             $action = array_shift($route);
 
+            if ($method === 'POST') {
+                $action .= 'Submit';
+            }
+
             $controller = $this->website->getController($controllerName); 
-           
+
             $page = $controller->$action(...$route);
 
             $title = $page['title'];
@@ -27,7 +31,7 @@ class EntryPoint {
             $variables = $page['variables'] ?? [];
             $output = $this->loadTemplate($page['template'], $variables);
             
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $title = 'An error has occurred';
 
             $output = 'Database error: ' . $e->getMessage() . ' in ' .
