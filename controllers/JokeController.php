@@ -64,13 +64,13 @@ class JokeController {
 
 	        $this->jokesTable->save($joke);
 
-	  		header('location: index.php?action=list');
+	  		header('location: /joke/list');
 
 	    }
 	    else {
 
 	        if (isset($id)) {
-	            $joke = $this->jokesTable->find('id', $_GET['id'])[0];
+	            $joke = $this->jokesTable->find('id', $id)[0];
 	        }
 	        else {
 	        	$joke = null;
