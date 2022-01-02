@@ -6,7 +6,6 @@ class JokeWebsite {
 
     public function getController(string $controllerName) {
         include __DIR__ . '/../includes/DatabaseConnection.php';
-        include __DIR__ . '/../classes/DatabaseTable.php';
         include __DIR__ . '/../controllers/JokeController.php';
         include __DIR__ . '/../controllers/RegisterController.php';
 
