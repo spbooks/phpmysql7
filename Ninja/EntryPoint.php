@@ -2,7 +2,7 @@
 namespace Ninja;
 
 class EntryPoint {
-    public function __construct(private $website) {
+    public function __construct(private \Ninja\Website $website) {
     }
 
     public function run($uri, $method) {
