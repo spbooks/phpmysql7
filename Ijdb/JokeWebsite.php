@@ -5,7 +5,7 @@ class JokeWebsite implements \Ninja\Website {
         return 'joke/home';
     }
 
-    public function getController(string $controllerName) {
+    public function getController(string $controllerName):? object {
         $pdo = new \PDO('mysql:host=mysql;dbname=ijdb;charset=utf8mb4', 'ijdbuser', 'mypassword');
 
         $jokesTable = new \Ninja\DatabaseTable($pdo, 'joke', 'id');
