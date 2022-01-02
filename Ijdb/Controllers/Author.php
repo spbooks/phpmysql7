@@ -1,6 +1,6 @@
 <?php
 namespace Ijdb\Controllers;
-class RegisterController {
+class Author {
 	public function __construct(private \Ninja\DatabaseTable $authorsTable) {
 
 	}

@@ -12,10 +12,9 @@ class JokeWebsite {
         $authorsTable = new \Ninja\DatabaseTable($pdo, 'author', 'id');
 
         if ($controllerName === 'joke') {
-            $controller = new \Ijdb\Controllers\Joke($jokesTable, $authorsTable);
         }
-        else if ($controllerName === 'register') {
-            $controller = new \Ijdb\Controllers\Register($authorsTable);
+        else if ($controllerName === 'author') {
+            $controller = new \Ijdb\Controllers\Author($authorsTable);
         }
 
         return $controller;
