@@ -1,6 +1,6 @@
 <?php
 namespace Ijdb;
-class JokeWebsite {
+class Website {
     public function getDefaultRoute() {
         return 'joke/home';
     }
