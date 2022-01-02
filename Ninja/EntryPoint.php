@@ -18,6 +18,8 @@ class EntryPoint {
             $controllerName = array_shift($route);
             $action = array_shift($route);
 
+            $this->website->checkLogin($controllerName . '/' . $action);
+
             if ($method === 'POST') {
                 $action .= 'Submit';
             }
@@ -45,7 +47,11 @@ class EntryPoint {
             $e->getFile() . ':' . $e->getLine();
         }
 
-        include  __DIR__ . '/../templates/layout.html.php';
+        $layoutVariables = $this->website->getLayoutVariables();
+        $layoutVariables['title'] = $title;
+        $layoutVariables['output'] = $output;
+
+        echo $this->loadTemplate('layout.html.php', $layoutVariables);
     }
 
     private function loadTemplate($templateFileName, $variables) {
@@ -60,7 +66,7 @@ class EntryPoint {
     private function checkUri($uri) {
         if ($uri != strtolower($uri)) {
             http_response_code(301);
-            header('location: ' . '/' . strtolower($uri));
+            header('location: /' . strtolower($uri));
         }
     }
 }

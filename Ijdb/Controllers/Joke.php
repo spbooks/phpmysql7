@@ -23,7 +23,7 @@ class Joke {
 	public function delete() {
 	    $this->jokesTable->delete('id', $_POST['id']);
 
-	    header('location: index.php?action=list');
+	    header('location: /joke/list');
 	}
 
 	public function list() {
