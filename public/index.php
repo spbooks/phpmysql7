@@ -1,5 +1,5 @@
 <?php
-function loadTemplate($templateFileName, $variables) {
+function loadTemplate($templateFileName, $variables = []) {
     extract($variables);
 
     ob_start();
@@ -12,29 +12,33 @@ try {
     include __DIR__ . '/../includes/DatabaseConnection.php';
     include __DIR__ . '/../classes/DatabaseTable.php';
     include __DIR__ . '/../controllers/JokeController.php';
+    include __DIR__ . '/../controllers/RegisterController.php';
 
     $jokesTable = new DatabaseTable($pdo, 'joke', 'id');
     $authorsTable = new DatabaseTable($pdo, 'author', 'id');
 
-    $jokeController = new JokeController($jokesTable, $authorsTable);
-
     $action = $_GET['action'] ?? 'home';
+    $controllerName = $_GET['controller'] ?? 'joke';
 
-    if ($action == strtolower($action)) {
-        $jokeController->$action();
-    } else {
-        http_response_code(301);
-        header('location: index.php?action=' . strtolower($action));
-        exit;
+    if ($controllerName === 'joke') {
+        $controller = new JokeController($jokesTable, $authorsTable);
+    }
+    else if ($controllerName === 'register') {
+        $controller = new RegisterController($authorsTable);
     }
 
-    $page = $jokeController->$action();
+    if ($action == strtolower($action) && $controllerName == strtolower($controllerName)) {
+        $page = $controller->$action();
+    } else {
+        http_response_code(301);
+        header('location: index.php?controller=' . strtolower($controllerName) .'&action=' . strtolower($action));
+    }
 
     $title = $page['title'];
 
     $variables = $page['variables'] ?? [];
     $output = loadTemplate($page['template'], $variables);
-
+    
 } catch (PDOException $e) {
     $title = 'An error has occurred';
 
