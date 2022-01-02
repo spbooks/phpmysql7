@@ -75,6 +75,9 @@ class JokeController {
 	        if (isset($_GET['id'])) {
 	            $joke = $this->jokesTable->find('id', $_GET['id'])[0];
 	        }
+	        else {
+	        	$joke = null;
+	        } 
 
 	        $title = 'Edit joke';
 
