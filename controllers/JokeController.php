@@ -73,7 +73,7 @@ class JokeController {
 	    else {
 
 	        if (isset($_GET['id'])) {
-	            $joke = $this->jokesTable->find('id', $_GET['id'])[0];
+	            $joke = $this->jokesTable->find('id', $_GET['id'])[0] ?? null;
 	        }
 	        else {
 	        	$joke = null;
