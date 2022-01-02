@@ -3,7 +3,7 @@ namespace Ijdb\Controllers;
 
 use \Ninja\DatabaseTable;
 
-class Register {
+class Author {
     public function __construct(private DatabaseTable $authorsTable) {
     }
 
