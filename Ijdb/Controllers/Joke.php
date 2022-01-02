@@ -1,10 +1,12 @@
 <?php
-class JokeController {
+namespace Ijdb\Controllers;
+
+class Joke {
 
 	private $authorsTable;
     private $jokesTable;
 
-    public function __construct(DatabaseTable $jokesTable, DatabaseTable $authorsTable) {
+    public function __construct(\Ninja\DatabaseTable $jokesTable, \Ninja\DatabaseTable $authorsTable) {
         $this->jokesTable = $jokesTable;
         $this->authorsTable = $authorsTable;
     }

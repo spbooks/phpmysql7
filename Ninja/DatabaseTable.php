@@ -1,6 +1,8 @@
 <?php
+namespace Ninja;
+
 class DatabaseTable {
-    public function __construct(private PDO $pdo, private string $table, private string $primaryKey) {
+    public function __construct(private \PDO $pdo, private string $table, private string $primaryKey) {
     }
 
     public function find($field, $value) {
@@ -36,7 +38,7 @@ class DatabaseTable {
                unset($record[$this->primaryKey]);
            }
            $this->insert($record);
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
            $this->update($record);
         }
     }

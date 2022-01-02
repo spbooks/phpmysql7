@@ -1,4 +1,6 @@
 <?php
+namespace Ninja;
+
 class EntryPoint {
     public function __construct(private $website) {
     }
