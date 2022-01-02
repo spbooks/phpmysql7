@@ -60,7 +60,7 @@ class EntryPoint {
     private function checkUri($uri) {
         if ($uri != strtolower($uri)) {
             http_response_code(301);
-            header('location: ' . strtolower($uri));
+            header('location: ' . '/' . strtolower($uri));
         }
     }
 }

@@ -15,9 +15,38 @@ class Author {
 	public function registrationFormSubmit() {
 	  $author = $_POST['author'];
 
-	  $this->authorsTable->save($author);
+	  // Start with an empty array
+	  $errors = [];
 
-	  header('Location: /author/success');
+	  // But if any of the fields have been left blank, set $valid to false
+	  if (empty($author['name'])) {
+	    $errors[] = 'Name cannot be blank';
+	  }
+
+	  if (empty($author['email'])) {
+	    $errors[] = 'Email cannot be blank';
+	  }
+
+	  if (empty($author['password'])) {
+	    $errors[] = 'Password cannot be blank';
+	  }
+
+	  // If the $errors array is still empty, no fields were blank and the data can be added
+	  if (empty($errors)) {
+	    $this->authorsTable->save($author);
+
+	    header('Location: /author/success');
+	  }
+	  else {
+	    // If the data is not valid, show the form again
+		return ['template' => 'register.html.php',
+		  'title' => 'Register an account',
+		  'variables' => [
+		    'errors' => $errors,
+		    'author' => $author
+		  ]
+		];
+	  }
 	}
 
     public function success() {
