@@ -14,7 +14,7 @@ class JokeWebsite implements \Ninja\Website {
         if ($controllerName === 'joke') {
             $controller = new \Ijdb\Controllers\Joke($jokesTable, $authorsTable);
         }
-        else if ($controllerName === 'Author') {
+        else if ($controllerName === 'author') {
             $controller = new \Ijdb\Controllers\Author($authorsTable);
         }
         else {
