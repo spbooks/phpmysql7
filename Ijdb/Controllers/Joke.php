@@ -3,12 +3,7 @@ namespace Ijdb\Controllers;
 
 class Joke {
 
-	private $authorsTable;
-    private $jokesTable;
-
-    public function __construct(\Ninja\DatabaseTable $jokesTable, \Ninja\DatabaseTable $authorsTable) {
-        $this->jokesTable = $jokesTable;
-        $this->authorsTable = $authorsTable;
+    public function __construct(private \Ninja\DatabaseTable $jokesTable, private \Ninja\DatabaseTable $authorsTable, private \Ninja\Authentication $authentication) {
     }
 
 	public function home() {
@@ -38,7 +33,8 @@ class Joke {
 	            'joketext' => $joke['joketext'],
 	            'jokedate' => $joke['jokedate'],
 	            'name' => $author['name'],
-	            'email' => $author['email']
+	            'email' => $author['email'],
+	            'authorId' => $author['id']
 	        ];
 
 	    }
@@ -47,27 +43,32 @@ class Joke {
 
 	    $totalJokes = $this->jokesTable->total();
 
+	    $user = $this->authentication->getUser();
+
 	    return ['template' => 'jokes.html.php',
 		    'title' => $title,
 		    'variables' => [
 		        'totalJokes' => $totalJokes,
-		        'jokes' => $jokes
+		        'jokes' => $jokes,
+		        'userId' => $user['id'] ?? null
 		    ]
 		];
 
 	}
 
 	public function editSubmit() {
+		$author = $this->authentication->getUser();
+
 	    $joke = $_POST['joke'];
 	    $joke['jokedate'] = new \DateTime();
-	    $joke['authorId'] = 1;
+	    $joke['authorId'] = $author['id'];
 
 	    $this->jokesTable->save($joke);
 
 	    header('location: /joke/list');
 	}
 
-	public function edit($id) {
+	public function edit($id = null) {
 	    if (isset($id)) {
 	        $joke = $this->jokesTable->find('id', $id)[0] ?? null;
 	    }

@@ -30,7 +30,7 @@ class JokeWebsite implements \Ninja\Website {
         $authorsTable = new \Ninja\DatabaseTable($pdo, 'author', 'id');
 
         if ($controllerName === 'joke') {
-            $controller = new \Ijdb\Controllers\Joke($jokesTable, $authorsTable);
+            $controller = new \Ijdb\Controllers\Joke($jokesTable, $authorsTable, $this->authentication);
         }
         else if ($controllerName === 'author') {
             $controller = new \Ijdb\Controllers\Author($authorsTable);
