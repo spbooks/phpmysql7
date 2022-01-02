@@ -5,9 +5,9 @@ class EntryPoint {
     public function __construct(private \Ninja\Website $website) {
     }
 
-    public function run($uri, $method) {
+     public function run(string $uri, string $method) {
         try {
-            $this->checkUri($uri);
+            $this->checkUri($uri, $method);
 
             if ($uri == '') {
                 $uri = $this->website->getDefaultRoute();
@@ -24,12 +24,19 @@ class EntryPoint {
 
             $controller = $this->website->getController($controllerName); 
 
-            $page = $controller->$action(...$route);
+            if (is_callable([$controller, $action])) {
+                $page = $controller->$action(...$route);
 
-            $title = $page['title'];
+                $title = $page['title'];
 
-            $variables = $page['variables'] ?? [];
-            $output = $this->loadTemplate($page['template'], $variables);
+                $variables = $page['variables'] ?? [];
+                $output = $this->loadTemplate($page['template'], $variables);
+            }
+            else {
+                http_response_code(404);
+                $title = 'Not found';
+                $output = 'Sorry, the page you are looking for could not be found.';
+            }
             
         } catch (\PDOException $e) {
             $title = 'An error has occurred';
