@@ -1,5 +1,5 @@
 <?php
-class RegisterController {
+class AuthorController {
 	public function __construct(private $authorsTable) {
 
 	}
