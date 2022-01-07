@@ -9,7 +9,7 @@ class JokeWebsite implements \Ninja\Website {
         $pdo = new \PDO('mysql:host=mysql;dbname=ijdb;charset=utf8mb4', 'ijdbuser', 'mypassword');
 
         $this->jokesTable = new \Ninja\DatabaseTable($pdo, 'joke', 'id');
-        $this->authorsTable = new \Ninja\DatabaseTable($pdo, 'author', 'id');
+        $this->authorsTable = new \Ninja\DatabaseTable($pdo, 'author', 'id', '\Ijdb\Entity\Author', [$this->jokesTable]);
         $this->authentication = new \Ninja\Authentication($this->authorsTable, 'email', 'password');
     }
 
