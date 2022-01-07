@@ -18,12 +18,20 @@ class DatabaseTable {
         return $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $this->className, $this->constructorArgs);
     }
 
-    public function findAll() {
-        $stmt = $this->pdo->prepare('SELECT * FROM `' . $this->table . '`');
+
+    public function findAll($orderBy = null) {
+        $query = 'SELECT * FROM `' . $this->table . '`';
+
+        if ($orderBy != null) {
+            $query .= ' ORDER BY ' . $orderBy;
+        }
+
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute();
 
-        return $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $this->className, $this->constructorArgs);
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, $this->className, $this->constructorArgs);
     }
+
 
     public function total() {
         $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM `' . $this->table . '`');
