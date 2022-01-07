@@ -26,11 +26,8 @@ class JokeWebsite implements \Ninja\Website {
     public function getController(string $controllerName): ?object {
         $pdo = new \PDO('mysql:host=mysql;dbname=ijdb;charset=utf8mb4', 'ijdbuser', 'mypassword');
 
-        $jokesTable = new \Ninja\DatabaseTable($pdo, 'joke', 'id');
-        $authorsTable = new \Ninja\DatabaseTable($pdo, 'author', 'id');
-
         if ($controllerName === 'joke') {
-            $controller = new \Ijdb\Controllers\Joke($jokesTable, $authorsTable, $this->authentication);
+            $controller = new \Ijdb\Controllers\Joke($this->jokesTable, $this->authorsTable, $this->authentication);
         }
         else if ($controllerName === 'author') {
             $controller = new \Ijdb\Controllers\Author($authorsTable);
