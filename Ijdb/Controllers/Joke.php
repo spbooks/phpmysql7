@@ -20,7 +20,7 @@ class Joke {
 		];
 	}
 
-	public function delete() {
+	public function deleteSubmit() {
 	    $this->jokesTable->delete('id', $_POST['id']);
 
 	    header('location: /joke/list');
