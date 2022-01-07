@@ -30,7 +30,7 @@ class Joke {
 	  header('location: /joke/list');
 	}
 
-	public function list() {
+	public function list($categoryId = null) {
 	  $jokes = $this->jokesTable->findAll();
 
 	  $totalJokes = $this->jokesTable->total();
@@ -42,7 +42,8 @@ class Joke {
 	        'variables' => [
 			    'totalJokes' => $totalJokes,
 		        'jokes' => $jokes,
-		        'userId' => $user->id ?? null	        
+		        'userId' => $user->id ?? null,
+		        'categories' => $this->categoriesTable->findAll()        
 		    ]
 	       ];
 	}
