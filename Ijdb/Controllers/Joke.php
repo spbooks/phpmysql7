@@ -35,7 +35,7 @@ class Joke {
 	    $jokes = $category->getJokes();
 	  }
 	  else {
-	    $jokes = $this->jokesTable->findAll('jokedate DESC');
+	    $jokes = $this->jokesTable->findAll('jokedate DESC', 10);
 	  }
 
 	  $totalJokes = $this->jokesTable->total();

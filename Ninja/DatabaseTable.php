@@ -5,25 +5,36 @@ class DatabaseTable {
     public function __construct(private \PDO $pdo, private string $table, private string $primaryKey, private string $className = '\stdClass', private array $constructorArgs = []) {
     }
 
-    public function find($field, $value) {
-        $query = 'SELECT * FROM `' . $this->table . '` WHERE `' . $field . '` = :value';
+    public function find(string $column, string $value, string $orderBy = null, int $limit = 0) {
+        $query = 'SELECT * FROM `' . $this->table . '` WHERE `' . $column . '` = :value';
 
         $values = [
-            'value' => $value
+          'value' => $value
         ];
+
+        if ($orderBy != null) {
+          $query .= ' ORDER BY ' . $orderBy;
+        }
+
+        if ($limit > 0) {
+            $query .= ' LIMIT ' . $limit;
+        }
 
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($values);
      
-        return $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $this->className, $this->constructorArgs);
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, $this->className, $this->constructorArgs);
     }
 
-
-    public function findAll($orderBy = null) {
-        $query = 'SELECT * FROM `' . $this->table . '`';
+    public function findAll(string $orderBy = null, int $limit = 0) {
+        $query = 'SELECT * FROM ' . $this->table;
 
         if ($orderBy != null) {
             $query .= ' ORDER BY ' . $orderBy;
+        }
+
+        if ($limit > 0) {
+            $query .= ' LIMIT ' . $limit;
         }
 
         $stmt = $this->pdo->prepare($query);
@@ -31,7 +42,6 @@ class DatabaseTable {
 
         return $stmt->fetchAll(\PDO::FETCH_CLASS, $this->className, $this->constructorArgs);
     }
-
 
     public function total() {
         $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM `' . $this->table . '`');

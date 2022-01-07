@@ -36,4 +36,22 @@ echo $date->format('jS F Y');
 
 </blockquote>
 <?php endforeach; ?>
+
+
+Select page:
+
+<?php
+// Calculate the number of pages
+$numPages = ceil($totalJokes/10);
+
+// Display a link for each page
+for ($i = 1; $i <= $numPages; $i++):
+?>
+  <a href="/joke/list/all/<?=$i?>"><?=$i?></a>
+<?php endfor; ?>
+
 </div>
+
+
+</div>
+

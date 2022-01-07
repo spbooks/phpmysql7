@@ -9,12 +9,14 @@ class Category {
     }
 
     public function getJokes() {
-      $jokeCategories = $this->jokeCategoriesTable->find('categoryId', $this->id);
+      $jokeCategories = $this->jokeCategoriesTable->find(column: 'categoryId', 
+                                                         value: $this->id, 
+                                                         limit: 10);
 
       $jokes = [];
 
       foreach ($jokeCategories as $jokeCategory) {
-        $joke =  $this->jokesTable->find('id', $jokeCategory->jokeId)[0];
+        $joke =  $this->jokesTable->find('id', $jokeCategory->jokeId)[0] ?? null;
         if ($joke) {
           $jokes[] = $joke;
         }           
