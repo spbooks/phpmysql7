@@ -50,19 +50,6 @@ class JokeWebsite implements \Ninja\Website {
         return $controller;
     }
 
-
-    public function getController(string $controllerName): ?object {
-
-      $controllers = [
-        'joke' => new \Ijdb\Controllers\Joke($this->jokesTable, $this->authorsTable, $this->authentication),
-        'register' => new new \Ijdb\Controllers\Register($this->authorsTable),
-        'login' => new new \Ijdb\Controllers\Register($this->authorsTable),
-        'category' => new new \Ijdb\Controllers\Category($this->categoriesTable)
-      ];
-      
-      return $controllers[$controllerName] ?? null;
-    }
-
     public function checkLogin(string $uri): ?string {
         $restrictedPages = ['joke/edit', 'joke/delete'];
 
