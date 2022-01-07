@@ -6,7 +6,7 @@ class Joke {
     public int $authorId;
     public string $jokedate;
     public string $joketext;
-    private $author;
+    private ?object $author;
 
     public function __construct(private ?\Ninja\DatabaseTable $authorsTable = null) {
     }
