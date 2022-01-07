@@ -35,16 +35,16 @@ class Joke {
 
 	    $jokes = [];
 	    foreach ($result as $joke) {
-	        $author = $this->authorsTable->find('id', $joke['authorId'])[0];
+	        $author = $this->authorsTable->find('id', $joke->authorId)[0];
 
-	        $jokes[] = [
-	            'id' => $joke['id'],
-	            'joketext' => $joke['joketext'],
-	            'jokedate' => $joke['jokedate'],
-	            'name' => $author['name'],
-	            'email' => $author['email'],
-	            'authorId' => $author['id']
-	        ];
+			$jokes[] = [
+			  'id' => $joke->id,
+			  'joketext' => $joke->joketext,
+			  'jokedate' => $joke->jokedate,
+			  'name' => $author->name,
+			  'email' => $author->email,
+			  'authorId' => $joke->authorId
+			];
 
 	    }
 
@@ -59,7 +59,7 @@ class Joke {
 		    'variables' => [
 		        'totalJokes' => $totalJokes,
 		        'jokes' => $jokes,
-		        'userId' => $user['id'] ?? null
+		        'userId' => $user->id ?? null
 		    ]
 		];
 

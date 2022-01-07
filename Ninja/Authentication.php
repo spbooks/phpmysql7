@@ -39,7 +39,7 @@ class Authentication {
         session_regenerate_id();
     }
 
-    public function getUser(): ?array {
+    public function getUser(): ?object {
 	  if ($this->isLoggedIn()) {
 	    return $this->users->find($this->usernameColumn, strtolower($_SESSION['username']))[0];
 	  }
