@@ -13,6 +13,8 @@ class JokeWebsite implements \Ninja\Website {
 
         $this->authorsTable = new \Ninja\DatabaseTable($pdo, 'author', 'id', '\Ijdb\Entity\Author', [&$this->jokesTable]);
 
+        $this->categoriesTable = new \Ninja\DatabaseTable($pdo, 'category', 'id');
+
         $this->authentication = new \Ninja\Authentication($this->authorsTable, 'email', 'password');
     }
 
@@ -38,11 +40,27 @@ class JokeWebsite implements \Ninja\Website {
         else if ($controllerName == 'login') {
             $controller = new \Ijdb\Controllers\Login($this->authentication);
         }
+        else if ($controllerName === 'category') {
+            $controller = new \Ijdb\Controllers\Category($this->categoriesTable);
+        }
         else {
             $controller = null;
         }
 
         return $controller;
+    }
+
+
+    public function getController(string $controllerName): ?object {
+
+      $controllers = [
+        'joke' => new \Ijdb\Controllers\Joke($this->jokesTable, $this->authorsTable, $this->authentication),
+        'register' => new new \Ijdb\Controllers\Register($this->authorsTable),
+        'login' => new new \Ijdb\Controllers\Register($this->authorsTable),
+        'category' => new new \Ijdb\Controllers\Category($this->categoriesTable)
+      ];
+      
+      return $controllers[$controllerName] ?? null;
     }
 
     public function checkLogin(string $uri): ?string {
