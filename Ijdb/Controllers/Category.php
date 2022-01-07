@@ -27,4 +27,22 @@ class Category {
 
       header('location: /category/list');
     }
+
+    public function list() {
+      return ['template' => 'categories.html.php',
+        'title' => 'Joke Categories',
+        'variables' => [
+          'categories' => $this->categoriesTable->findAll()
+        ]
+      ];
+    }
+
+    public function list() {
+      return ['template' => 'categories.html.php',
+        'title' => 'Joke Categories',
+        'variables' => [
+          'categories' => $this->categoriesTable->findAll()
+        ]
+      ];
+    }
 }
