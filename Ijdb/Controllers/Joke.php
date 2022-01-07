@@ -15,13 +15,13 @@ class Joke {
 		];
 	}
 
-	public function delete() {
+	public function deleteSubmit() {
 
 	  $author = $this->authentication->getUser();
 
 	  $joke = $this->jokesTable->find('id', $_POST['id'])[0];
 
-	  if ($joke['authorId'] != $author['id']) {
+	  if ($joke->authorId != $author->id) {
 	    return;
 	  }
 
