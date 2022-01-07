@@ -31,6 +31,22 @@ class Joke {
 	}
 
 	public function list() {
+	  $jokes = $this->jokesTable->findAll();
+
+	  $totalJokes = $this->jokesTable->total();
+
+	  $user = $this->authentication->getUser();
+
+	  return ['template' => 'jokes.html.php',
+	        'title' => 'Joke List',
+	        'variables' => [
+			    'totalJokes' => $totalJokes,
+		        'jokes' => $jokes,
+		        'userId' => $user->id ?? null	        
+		    ]
+	       ];
+	}
+	public function list2() {
 	    $result = $this->jokesTable->findAll();
 
 	    $jokes = [];
@@ -53,6 +69,7 @@ class Joke {
 	    $totalJokes = $this->jokesTable->total();
 
 	    $user = $this->authentication->getUser();
+
 
 	    return ['template' => 'jokes.html.php',
 		    'title' => $title,
