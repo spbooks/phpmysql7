@@ -29,35 +29,12 @@ class JokeWebsite implements \Ninja\Website {
     }
 
     public function getController(string $controllerName): ?object {
-        $pdo = new \PDO('mysql:host=mysql;dbname=ijdb;charset=utf8mb4', 'ijdbuser', 'mypassword');
-
-        if ($controllerName === 'joke') {
-            $controller = new \Ijdb\Controllers\Joke($this->jokesTable, $this->authorsTable, $this->authentication);
-        }
-        else if ($controllerName === 'author') {
-            $controller = new \Ijdb\Controllers\Author($this->authorsTable);
-        }
-        else if ($controllerName == 'login') {
-            $controller = new \Ijdb\Controllers\Login($this->authentication);
-        }
-        else if ($controllerName === 'category') {
-            $controller = new \Ijdb\Controllers\Category($this->categoriesTable);
-        }
-        else {
-            $controller = null;
-        }
-
-        return $controller;
-    }
-
-
-    public function getController(string $controllerName): ?object {
 
       $controllers = [
         'joke' => new \Ijdb\Controllers\Joke($this->jokesTable, $this->authorsTable, $this->authentication),
-        'register' => new new \Ijdb\Controllers\Register($this->authorsTable),
-        'login' => new new \Ijdb\Controllers\Register($this->authorsTable),
-        'category' => new new \Ijdb\Controllers\Category($this->categoriesTable)
+        'register' => new \Ijdb\Controllers\Register($this->authorsTable),
+        'login' => new \Ijdb\Controllers\Register($this->authorsTable),
+        'category' => new \Ijdb\Controllers\Category($this->categoriesTable)
       ];
       
       return $controllers[$controllerName] ?? null;
