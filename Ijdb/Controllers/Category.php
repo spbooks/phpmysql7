@@ -36,4 +36,11 @@ class Category {
         ]
       ];
     }
+
+
+    public function deleteSubmit() {
+      $this->categoriesTable->delete('id', $_POST['id']);
+
+      header('location: /category/list');
+    }
 }
