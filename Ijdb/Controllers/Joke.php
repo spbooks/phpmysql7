@@ -65,16 +65,27 @@ class Joke {
 
 	}
 
-	public function editSubmit($id = null) {
+	public function editSubmit() {
+		// Get the currently logged in user as the $author to associate the joke with
 		$author = $this->authentication->getUser();
 
-	    $joke = $_POST['joke'];
-	    $joke['jokedate'] = new \DateTime();
-	    $joke['authorId'] = $author['id'];
+		// Create an `Author` entity instance
+		$authorObject = new \Ijdb\Entity\Author($this->jokesTable);
 
-	    $this->jokesTable->save($joke);
+		// Copy the values from the `$author` array into the corresponding properties in the entity object
+		$authorObject->id = $author['id'];
+		$authorObject->name = $author['name'];
+		$authorObject->email = $author['email'];
+		$authorObject->password = $author['password'];
 
-	    header('location: /joke/list');
+		// Read the form submission and set the date
+		$joke = $_POST['joke'];
+		$joke['jokedate'] = new \DateTime();
+
+		// Save the joke using the new addJoke method
+		$authorObject->addJoke($joke);
+
+		header('location: /joke/list');
 	}
 
 	public function edit($id = null) {
