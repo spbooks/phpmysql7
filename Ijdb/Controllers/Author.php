@@ -72,4 +72,43 @@ class Author {
       ];
         }
     }
+
+
+    public function list() {
+        $authors = $this->authorsTable->findAll();
+
+        return ['template' => 'authorlist.html.php',
+            'title' => 'Author List',
+            'variables' => [
+            'authors' => $authors
+            ]
+        ];
+    }
+
+    public function permissions($id = null) {
+
+        $author = $this->authorsTable->find('id', $id)[0];
+
+        $reflected = new \ReflectionClass('\Ijdb\Entity\Author');
+        $constants = $reflected->getConstants();
+
+        return ['template' => 'permissions.html.php',
+            'title' => 'Edit Permissions',
+            'variables' => [
+            'author' => $author,
+            'permissions' => $constants
+            ]
+        ];
+    }
+
+    public function permissionsSubmit($id = null) {
+        $author = [
+            'id' => $id,
+            'permissions' => array_sum($_POST['permissions'] ?? [])
+        ];
+
+        $this->authorsTable->save($author);
+
+        header('location: /author/list');
+    }
 }

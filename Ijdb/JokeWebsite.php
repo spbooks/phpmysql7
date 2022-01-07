@@ -55,7 +55,7 @@ class JokeWebsite implements \Ninja\Website {
             'author/permissions' => \Ijdb\Entity\Author::EDIT_USER_ACCESS,
             'author/list' => \Ijdb\Entity\Author::EDIT_USER_ACCESS
         ];
-           
+
         if (isset($restrictedPages[$uri])) {
           if (!$this->authentication->isLoggedIn()
              || !$this->authentication->getUser()->hasPermission($restrictedPages[$uri])) {
