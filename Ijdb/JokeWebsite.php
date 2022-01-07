@@ -32,8 +32,8 @@ class JokeWebsite implements \Ninja\Website {
 
       $controllers = [
         'joke' => new \Ijdb\Controllers\Joke($this->jokesTable, $this->authorsTable, $this->authentication),
-        'register' => new \Ijdb\Controllers\Register($this->authorsTable),
-        'login' => new \Ijdb\Controllers\Register($this->authorsTable),
+        'author' => new \Ijdb\Controllers\Author($this->authorsTable),
+        'login' => new \Ijdb\Controllers\Login($this->authentication),
         'category' => new \Ijdb\Controllers\Category($this->categoriesTable)
       ];
       
