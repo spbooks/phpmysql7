@@ -2,7 +2,7 @@
 
 <ul class="categories">
   <?php foreach ($categories as $category): ?>
-    <li><a href="/joke/list?category=<?=$category->id?>"><?=$category->name?></a><li>
+    <li><a href="/joke/list/<?=$category->id?>"><?=$category->name?></a><li>
   <?php endforeach; ?>
 </ul>
 

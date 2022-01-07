@@ -15,7 +15,7 @@ class JokeWebsite implements \Ninja\Website {
 
         $this->authorsTable = new \Ninja\DatabaseTable($pdo, 'author', 'id', '\Ijdb\Entity\Author', [&$this->jokesTable]);
 
-        $this->categoriesTable = new \Ninja\DatabaseTable($pdo, 'category', 'id');
+        $this->categoriesTable = new \Ninja\DatabaseTable($pdo, 'category', 'id', '\Ijdb\Entity\Category', [&$this->jokesTable, &$this->jokeCategoriesTable]);
 
         $this->jokeCategoriesTable = new \Ninja\DatabaseTable($pdo, 'joke_category', 'categoryId');
 
