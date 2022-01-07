@@ -20,5 +20,7 @@ class Author {
       $joke['authorId'] = $this->id;
 
       $this->jokesTable->save($joke);
+
+      return $this->jokesTable->find('id', $joke['id'])[0];
     }
 }

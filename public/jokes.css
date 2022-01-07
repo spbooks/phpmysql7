@@ -37,3 +37,7 @@ blockquote form {display: table-cell; width: 10%;}
 .errors ul {
   margin-left: 1em;
 }
+
+form p {clear: both;}
+input[type="checkbox"] {float: left; clear: left; width: auto; margin-right: 10px;}
+input[type="checkbox"] + label {clear: right;}

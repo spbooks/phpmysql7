@@ -33,14 +33,27 @@ class DatabaseTable {
     }
 
     public function save($record) {
+        $entity = new $this->className(...$this->constructorArgs);
         try {
            if (empty($record[$this->primaryKey])) {
                unset($record[$this->primaryKey]);
            }
-           $this->insert($record);
+           $insertId = $this->insert($record);
+
+           $entity->{$this->primaryKey} = $insertId;
         } catch (\PDOException $e) {
            $this->update($record);
         }
+
+        foreach ($record as $key => $value) {
+            if (!empty($value)) {
+                if ($value instanceof \DateTime) {
+                    $value = $value->format('Y-m-d H:i:s');
+                }
+                $entity->$key = $value;
+            }
+        }
+        return $entity;
     }
 
     private function update($values) {
@@ -86,6 +99,8 @@ class DatabaseTable {
 
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($values);
+
+        return $this->pdo->lastInsertId();
     }
 
     public function delete($field, $value) {

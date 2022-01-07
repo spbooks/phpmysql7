@@ -8,7 +8,7 @@ class Joke {
     public string $joketext;
     private ?object $author;
 
-    public function __construct(private ?\Ninja\DatabaseTable $authorsTable = null) {
+    public function __construct(private ?\Ninja\DatabaseTable $authorsTable, private ?\Ninja\DatabaseTable $jokeCategoriesTable) {
     }
 
     public function getAuthor() {
@@ -17,5 +17,11 @@ class Joke {
       }
 
       return $this->author;
+    }
+
+    public function addCategory($categoryId) {
+      $jokeCat = ['jokeId' => $this->id, 'categoryId' => $categoryId];
+
+      $this->jokeCategoriesTable->save($jokeCat);
     }
 }
