@@ -15,7 +15,7 @@ class Joke {
 		];
 	}
 
-	public function delete() {
+	public function deleteSubmit() {
 
 	  $author = $this->authentication->getUser();
 
