@@ -19,4 +19,12 @@ class Category {
         ]
       ];
     }
+
+    public function editSubmit() {
+      $category = $_POST['category'];
+
+      $this->categoriesTable->save($category);
+
+      header('location: /category/list');
+    }
 }
