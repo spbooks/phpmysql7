@@ -17,17 +17,16 @@ class Joke {
 
 	public function deleteSubmit() {
 
-	  $author = $this->authentication->getUser();
+		$author = $this->authentication->getUser();
 
-	  $joke = $this->jokesTable->find('id', $_POST['id'])[0];
+		$joke = $this->jokesTable->find('id', $_POST['id'])[0];
 
-	  if ($joke->authorId != $author->id) {
-	    return;
-	  }
+		if ($joke->authorId != $author->id && !$author->hasPermission(\Ijdb\Entity\Author::DELETE_JOKE)) {
+			return;
+		}
+		$this->jokesTable->delete('id', $_POST['id']);
 
-	  $this->jokesTable->delete('id', $_POST['id']);
-
-	  header('location: /joke/list');
+		header('location: /joke/list');
 	}
 
 	public function list($categoryId = null) {
@@ -48,7 +47,7 @@ class Joke {
 	        'variables' => [
 			    'totalJokes' => $totalJokes,
 		        'jokes' => $jokes,
-		        'userId' => $user->id ?? null,
+		        'user' => $user,
 		        'categories' => $this->categoriesTable->findAll()        
 		    ]
 	       ];
@@ -96,7 +95,7 @@ class Joke {
 	        'title' => $title,
 	        'variables' => [
 	            'joke' => $joke,
-	            'userId' => $author->id ?? null,
+	            'user' => $author,
 	            'categories' => $categories
 	        ]
 	    ];
