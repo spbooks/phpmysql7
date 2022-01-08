@@ -29,16 +29,17 @@ class Joke {
 		header('location: /joke/list');
 	}
 
-	public function list($categoryId = null) {
-	  if (isset($categoryId)) {
+	public function list(mixed $categoryId = null, ?int $page = 0) {
+	  if (is_numeric($categoryId)) {
 	    $category = $this->categoriesTable->find('id', $categoryId)[0];
 	    $jokes = $category->getJokes();
+	    $totalJokes = $category->getNumJokes();
 	  }
 	  else {
-	    $jokes = $this->jokesTable->findAll('jokedate DESC', 10);
+	    $jokes = $this->jokesTable->findAll('jokedate DESC', 10, $page);
+	    $totalJokes = $this->jokesTable->total();
 	  }
-
-	  $totalJokes = $this->jokesTable->total();
+ 
 
 	  $user = $this->authentication->getUser();
 

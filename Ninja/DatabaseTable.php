@@ -26,7 +26,7 @@ class DatabaseTable {
         return $stmt->fetchAll(\PDO::FETCH_CLASS, $this->className, $this->constructorArgs);
     }
 
-    public function findAll(string $orderBy = null, int $limit = 0) {
+    public function findAll(string $orderBy = null, int $limit = 0, int $offset = 0) {
         $query = 'SELECT * FROM ' . $this->table;
 
         if ($orderBy != null) {
@@ -36,6 +36,11 @@ class DatabaseTable {
         if ($limit > 0) {
             $query .= ' LIMIT ' . $limit;
         }
+
+        if ($offset > 0) {
+            $query .= ' OFFSET ' . $offset;
+        }
+
 
         $stmt = $this->pdo->prepare($query);
         $stmt->execute();
