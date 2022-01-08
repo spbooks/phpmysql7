@@ -37,4 +37,8 @@ class Category {
 
       return $aDate->getTimestamp() > $bDate->getTimestamp() ? -1 : 1;
     }
+
+    public function getNumJokes() {
+      return $this->jokeCategoriesTable->total('categoryId', $this->id);
+    }
 }
